@@ -1,0 +1,22 @@
+<div class="content-wrapper">
+    <section class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2">
+                <div class="col-sm-6">
+                    <h1>{{pageTitle()}}</h1>
+                </div>
+                <div class="col-sm-6">
+                    <ol class="breadcrumb float-sm-right">
+                        @for(crumb of breadCrumbs(); track crumb.name){
+                        <li class="breadcrumb-item {{crumb.class}}">
+                            <a [routerLink]="crumb.route">{{crumb.name}}</a>
+                        </li>
+                        }
+                    </ol>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <ng-content></ng-content>
+</div>

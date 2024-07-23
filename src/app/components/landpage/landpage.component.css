@@ -1,0 +1,9 @@
+img{
+    object-fit: contain !important;
+}
+
+.list-group-item:hover{
+    background-color: #f1f1f1;
+    cursor: pointer;
+    color: black;
+}

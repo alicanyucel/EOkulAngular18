@@ -1,0 +1,22 @@
+.part1{
+    border-right: 1px solid #ccc;
+}
+
+.login-container{
+    overflow: hidden;
+}
+
+img{
+    padding: 10px;
+    object-fit: cover;
+}
+
+.part2{
+    height: 98vh;
+    display: flex;
+    align-items: center;
+}
+
+.login-card{
+    width: 98%;
+}
