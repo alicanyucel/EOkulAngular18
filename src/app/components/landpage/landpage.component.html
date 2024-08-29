@@ -1,0 +1,110 @@
+<div class="container">
+    <nav class="navbar navbar-expand-lg bg-body-tertiary">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="/">e-Okul</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+                aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                </ul>
+                <button class="btn btn-success me-2 relative">
+                    <i class="fa-solid fa-cart-shopping me-1"></i>
+                    Sepet
+                    @if(basketCount() > 0){
+                        <span class="my-badge">{{basketCount()}}</span>
+                    }
+                </button>
+                <button routerLink="/login" class="btn btn-dark">
+                    <i class="fa-solid fa-lock me-1"></i>
+                    Giriş Yap
+                </button>
+            </div>
+        </div>
+    </nav>    
+
+    <div id="carouselExample" class="carousel slide" style="margin-top: 20px;">
+        <div class="carousel-inner">
+            <div class="carousel-item active">
+                <img src="/img/resim1.jpeg" class="d-block w-100">
+            </div>
+            <div class="carousel-item">
+                <img src="/img/resim2.jpeg" class="d-block w-100">
+            </div>
+            <div class="carousel-jpeg">
+                <img src="/img/resim3.webp" class="d-block w-100">
+            </div>
+        </div>
+        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Previous</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#carouselExample" data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Next</span>
+        </button>
+    </div>
+
+    <hr>
+
+    <div class="text-center" style="margin-top: 20px;">
+        <h3>Satın Alabileceğiniz Kitaplar</h3>        
+        <div class="form-group row">
+            <div class="col-md-3 col-12">
+                <ul class="list-group">
+                    <li
+                      class="list-group-item"
+                      [ngClass]="selectedCategory() === '' ? 'active' : ''"
+                      (click)="selectCategory('')"
+                      >
+                        Tümü
+                    </li>
+                    @for(category of categories(); track category.id){
+                        <li
+                          class="list-group-item"
+                          [ngClass]="selectedCategory() === category.id ? 'active' : ''"
+                          (click)="selectCategory(category.id)"
+                          >
+                          {{category.name}}
+                        </li>
+                    }
+                  </ul>
+            </div>
+            <div class="col-md-9 col-12">
+                <div class="relative">
+                    <input type="search" class="form-control" placeholder="Aranacak değer girin...">
+                    <i class="fa-solid fa-magnifying-glass search-i"></i>
+                </div>
+                <div class="form-group row mt-2">
+                    @for(book of books(); track book){
+                    <div class="col-md-6 col-12">
+                        <div class="card">
+                            <div class="card-header">
+                                <img src="https://www.oreilly.com/library/cover/9780134494272/1200w630h/" class="card-img-top">
+                            </div>
+                            <div class="card-body">
+                                <h3 class="text-center">Card title</h3>
+                                <ul>
+                                    <li>1. Sınıf</li>
+                                    <li>2. Sınıf</li>
+                                </ul>
+                                <div class="my-alert-title mt-1" style="display: flex; justify-content: space-around;">
+                                    <strong>Taner Saydam</strong>
+                                    @if(book.discountPrice){
+                                        <span class="my-alert-price alert-danger"><del>{{book.price | trCurrency: '₺': true}}</del></span>
+                                    }
+                                    <span class="my-alert-price alert-success">{{(book.price - (book.discountPrice ?? 0)) | trCurrency: '₺': true}}</span>
+                                </div>
+                                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                                <a class="btn btn-primary">Ürün Detayı</a>
+                            </div>
+                        </div>
+                    </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,31 @@
+.change-cover-image-btn {
+    position: absolute;
+    top: 25px;
+    right: 25px;
+    z-index: 999;
+}
+
+.book-cover-image {
+    border: 1px solid #ccc;
+    padding: 10px;
+}
+
+.book-image {
+    border: 1px solid #ccc;
+    padding: 10px;
+    cursor: pointer;
+}
+
+.delete-image-btn {
+    position: absolute;
+    top: 15px;
+    padding: 5px;
+    border: 1px solid;
+    cursor: pointer;
+    right: 15px;
+    opacity: 0.5 !important;
+}
+
+.delete-image-btn:hover {
+    opacity: 1 !important;
+}

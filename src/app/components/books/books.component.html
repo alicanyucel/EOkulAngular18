@@ -1,0 +1,80 @@
+<app-blank pageTitle="Kitaplar" [breadCrumbs]="breadCrumbs()">
+    <app-section sectionTitle="Kitaplar">
+        <flexi-grid
+        [data]="books()"
+        [pageable]="true"
+        [sortable]="true"
+        [draggable]="true"
+        [showCaption]="true"
+        [filterable]="true"
+        captionTitle="Kitap Listesi"
+        [showIndex]="true"
+        [resizable]="true"
+        [captionTemplate]="captionTemplate"
+        >
+            <ng-template #captionTemplate>
+                <button class="btn btn-primary" title="Kitap ekle">
+                    <i class="fa-solid fa-plus"></i>
+                </button>
+            </ng-template>
+            <flexi-grid-column field="id" title="Id" [visible]="false"></flexi-grid-column>
+            <flexi-grid-column field="coverImage" [filterable]="false" title="Kapak Resmi" [columnTemplate]="coverImageColumnTemplate">
+                <ng-template #coverImageColumnTemplate let-item="item">
+                    <img (click)="setSelectedBook(item)" style="cursor: pointer;" data-bs-toggle="modal" data-bs-target="#bookImagesModal" [src]="fileUrl + item.coverImage" width="100">
+                </ng-template>
+            </flexi-grid-column>
+            <flexi-grid-column field="title" title="Kitap Adı"></flexi-grid-column>
+            <flexi-grid-column field="author" title="Yazar"></flexi-grid-column>
+            <flexi-grid-column field="summary" title="Özet" [visible]="false"></flexi-grid-column>
+            <flexi-grid-column field="isbn" title="ISBN"></flexi-grid-column>            
+            <flexi-grid-column field="categoryNames" title="Kategori İsimleri"></flexi-grid-column>
+            <flexi-grid-column title="İşlemler" [columnTemplate]="operationsColumnTemplate" textAlign="center" width="110px">
+                <ng-template #operationsColumnTemplate let-item="item">
+                    <button class="btn btn-primary btn-sm me-1" title="Güncelle">
+                        <i class="fa-solid fa-edit"></i>
+                    </button>
+                    <button class="btn btn-danger btn-sm" title="Sil">
+                        <i class="fa-solid fa-trash"></i>
+                    </button>
+                </ng-template>
+            </flexi-grid-column>
+        </flexi-grid>
+    </app-section>
+</app-blank>
+
+
+<div class="modal fade" id="bookImagesModal" tabindex="-1">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5">{{selectedBook().title}} Kitap Resimleri</h1>
+                <button type="button" class="btn-close" #bookImagesModalCloseBtn data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body text-center" style="position: relative;">
+                <div class="form-group book-cover-image">
+                    <img [src]="fileUrl + selectedBook().coverImage" width="400" height="400px" style="object-fit: cover;">
+                </div>
+                <button [disabled]="selectedBook().coverImage === selectedBookCoverImage()" class="btn btn-primary change-cover-image-btn" title="Bunu kapak resmi yap">
+                    <i class="fa-solid fa-check" (click)="changeCoverImage()"></i>
+                </button>
+                <hr>
+                <div class="from-group">
+                    <input type="file" class="form-control" multiple (change)="addNewImages($event)">
+                </div>
+                <div class="form-group mt-2" style="display: flex; justify-content: space-around; flex-wrap: wrap;">
+                    @for(image of selectedBook().bookImageNames; track image; let i = $index){
+                        <div style="position: relative;">
+                            <div class="book-image" (click)="selectedBook().coverImage = image">
+                                <img [src]="fileUrl + image" width="100" height="100" style="object-fit: cover;">
+                            </div>
+                            <i
+                              class="fa-solid fa-trash delete-image-btn text-danger"
+                              (click)="removeImage(image, i)">
+                            </i>                            
+                        </div>
+                    }
+                </div>
+            </div>            
+        </div>
+    </div>
+</div>
